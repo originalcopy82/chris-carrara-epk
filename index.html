@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chris Carrara | EPK</title>
+  <link rel="preload" href="assets/Hot Bleb.otf" as="font" type="font/otf" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+  <style>
+    /* RESET */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      height: 100%;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+      color: #fff;
+      background: #111 url('assets/IMG_7237.JPG') no-repeat center 5%;
+      background-size: cover;
+      background-attachment: fixed;
+      min-height: 200vh; /* Force scrolling for testing */
+      position: relative;
+    }
+
+    section { padding: 60px 20px; text-align: center; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding-bottom: 80px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+    }
+
+    .hero-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding-bottom: 80px;
+      overflow: hidden;
+    }
+
+    .hero h1.logo {
+      font-family: 'MyCustomFont', 'Oswald', sans-serif;
+      font-size: clamp(2.5rem, 8vw, 5.5rem);
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+      line-height: 0.9;
+      max-width: 95%;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+      .hero {
+        align-items: center;
+        padding: 20px 10px;
+      }
+      
+      .hero-container {
+        align-items: center;
+        padding-bottom: 0;
+        padding: 0 10px;
+      }
+      
+      .hero h1.logo {
+        font-size: clamp(2rem, 6vw, 3.5rem);
+        white-space: normal;
+        word-spacing: 0.2em;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1.logo {
+        font-size: clamp(1.8rem, 5vw, 2.8rem);
+        line-height: 1;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .hero h1.logo {
+        font-size: clamp(1.5rem, 4.5vw, 2.5rem);
+      }
+    }
+
+    section.content-block { padding: 0; }
+
+    .content-block {
+      max-width: 400px;
+      width: 100%;
+      margin: 40px auto;
+      box-sizing: border-box;
+    }
+
+    /* About box */
+    .about {
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    /* AUDIO PLAYERS */
+    .player-wrapper {
+      width: 100%;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+
+    .player-wrapper iframe {
+      width: 100% !important;
+      height: 160px;
+      display: block;
+      border: 0;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .player-wrapper.soundcloud iframe { height: 250px; }
+
+    /* GALLERY */
+    .gallery-slider {
+      width: 100%;
+      height: 400px;
+      margin: 0 auto;
+      position: relative;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .slide.active { opacity: 1; z-index: 1; }
+
+    /* Slider controls overlay */
+    .slider-controls {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .slider-controls button {
+      pointer-events: all;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    }
+
+    .slider-controls button:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(1.1);
+    }
+
+    /* SOCIALS */
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      margin-top: 20px;
+    }
+    .social-icons img { width: 100px; height: 100px; transition: transform 0.3s; }
+    .social-icons img:hover { transform: scale(1.2); }
+
+    /* Scroll animations */
+    .fade-in, .slide-left, .slide-right, .zoom-in { opacity: 0; transition: all 0.8s ease-out; }
+    .fade-in.show { opacity: 1; }
+    .slide-left { transform: translateX(-30px); }
+    .slide-left.show { transform: translateX(0); opacity: 1; }
+    .slide-right { transform: translateX(30px); }
+    .slide-right.show { transform: translateX(0); opacity: 1; }
+    .zoom-in { transform: scale(0.95); }
+    .zoom-in.show { transform: scale(1); opacity: 1; }
+
+    /* MOBILE FIX */
+    @media (max-width: 420px) {
+      .content-block { max-width: 100%; padding: 0 12px; }
+      .player-wrapper iframe { height: 140px; }
+      .player-wrapper.soundcloud iframe { height: 200px; }
+      .social-icons { gap: 30px; }
+      .social-icons img { width: 80px; height: 80px; }
+    }
+
+    @font-face {
+      font-family: 'MyCustomFont';
+      src: url('assets/Hot Bleb.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* Only for very small mobile devices that have issues with fixed */
+    @media (max-width: 768px) {
+      body { 
+        background-attachment: scroll;
+        background-position: center 5%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+      }
+      
+      /* Create a fixed pseudo-element for mobile */
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('assets/IMG_7237.JPG') no-repeat center 5%/cover;
+        z-index: -1;
+      }
+      
+      /* Hide the original background on mobile */
+      body {
+        background-image: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-container">
+    <h1 class="logo">CHRIS CARRARA</h1>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about content-block fade-in">
+  <p>
+    Glasgow-born DJ Chris Carrara has 20 years of global clubbing experience. From house and techno to hip-hop and tribal beats, his sets light up dance floors everywhere.
+    Now in The Gambia, he's bringing epic vibes to clubs across West Africa.
+  </p>
+</section>
+
+<!-- MUSIC -->
+<section class="music content-block">
+  <div class="player-wrapper soundcloud slide-left">
+    <iframe tabindex="-1" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1172241892&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true" allow="autoplay"></iframe>
+  </div>
+
+  <div class="player-wrapper mixcloud slide-right">
+    <iframe tabindex="-1" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2FChris_Carrara%2F" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery content-block zoom-in">
+  <div class="gallery-slider">
+    <div class="slide active"><img src="assets/hilove.jpeg" alt="Gallery 1"></div>
+    <div class="slide"><img src="assets/IMG_6911.JPG" alt="Gallery 2"></div>
+    <div class="slide"><img src="assets/9A8FE417-6F04-4EC9-B84B-96B55BE5E391.JPG" alt="Gallery 3"></div>
+    <div class="slider-controls">
+      <button id="prev">&#10094;</button>
+      <button id="next">&#10095;</button>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIALS -->
+<section class="socials content-block fade-in">
+  <div class="social-icons">
+    <a href="https://instagram.com/" target="_blank"><img src="assets/instagram.svg" alt="Instagram"></a>
+    <a href="https://soundcloud.com/" target="_blank"><img src="assets/soundcloud.svg" alt="SoundCloud"></a>
+    <a href="https://mixcloud.com/" target="_blank"><img src="assets/mixcloud.svg" alt="Mixcloud"></a>
+  </div>
+</section>
+
+<!-- SCRIPTS -->
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+
+function showSlide(index){
+  slides.forEach((slide,i)=>{
+    slide.classList.remove('active');
+    if(i===index) slide.classList.add('active');
+  });
+}
+
+document.getElementById('prev').addEventListener('click', ()=>{
+  currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+  showSlide(currentSlide);
+});
+document.getElementById('next').addEventListener('click', ()=>{
+  currentSlide = (currentSlide + 1) % totalSlides;
+  showSlide(currentSlide);
+});
+setInterval(()=>{ currentSlide = (currentSlide + 1) % totalSlides; showSlide(currentSlide); },5000);
+showSlide(currentSlide);
+
+// Swipe support
+let startX = 0;
+const slider = document.querySelector('.gallery-slider');
+slider.addEventListener('touchstart', e=> startX = e.touches[0].clientX );
+slider.addEventListener('touchend', e=>{
+  let diffX = e.changedTouches[0].clientX - startX;
+  if(Math.abs(diffX)>50) currentSlide = (diffX>0)?(currentSlide-1+totalSlides)%totalSlides:(currentSlide+1)%totalSlides;
+  showSlide(currentSlide);
+});
+
+// Scroll animations
+const scrollElems = document.querySelectorAll('.fade-in, .slide-left, .slide-right, .zoom-in');
+const observerOptions = { threshold: 0.2 };
+const observer = new IntersectionObserver((entries, obs)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){ entry.target.classList.add('show'); obs.unobserve(entry.target); }
+  });
+}, observerOptions);
+scrollElems.forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
