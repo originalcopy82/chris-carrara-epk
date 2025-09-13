@@ -146,23 +146,28 @@ body {
   padding: 20px; /* padding inside black box */
 }
 
-    /* AUDIO PLAYERS */
-    .player-wrapper {
-      width: 100%;
-      margin: 0 auto 40px;
-      text-align: center;
-    }
+    /* MUSIC PLAYERS */
+.player-wrapper {
+  width: 100%;
+  margin: 0 auto 40px; /* spacing between widgets */
+  text-align: center;
+}
 
-    .player-wrapper iframe {
-      width: 100% !important;
-      height: 160px;
-      display: block;
-      border: 0;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    }
+.player-wrapper iframe {
+  width: 100% !important;
+  display: block;
+  border: 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
 
-    .player-wrapper.soundcloud iframe { height: 250px; }
+.player-wrapper.soundcloud iframe {
+  height: 166px; /* official small player height */
+}
+
+.player-wrapper.mixcloud iframe {
+  height: 120px; /* visually compact */
+}
 
     /* GALLERY */
     .gallery-slider {
@@ -315,12 +320,27 @@ body {
 
 <!-- MUSIC -->
 <section class="music content-block">
+  <!-- SoundCloud Player -->
   <div class="player-wrapper soundcloud slide-left">
-    <iframe tabindex="-1" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1172241892&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true" allow="autoplay"></iframe>
+    <iframe 
+      width="100%" 
+      height="166" 
+      scrolling="no" 
+      frameborder="no" 
+      allow="autoplay" 
+      src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1172240515&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+    </iframe>
   </div>
 
+  <!-- Mixcloud Player -->
   <div class="player-wrapper mixcloud slide-right">
-    <iframe tabindex="-1" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2FChris_Carrara%2F" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
+    <iframe 
+      tabindex="-1" 
+      width="100%" 
+      height="120" 
+      src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2FChris_Carrara%2F" 
+      allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;">
+    </iframe>
   </div>
 </section>
 
@@ -395,7 +415,7 @@ window.addEventListener('scroll', () => {
   const overlay = document.querySelector('.scroll-overlay');
   const scrollTop = window.scrollY;
   const maxScroll = window.innerHeight; // max scroll before fully dark
-  let opacity = Math.min(scrollTop / maxScroll, 0.7); // max opacity 0.7
+  let opacity = Math.min(scrollTop / maxScroll, 0.8); // max opacity 0.7
   overlay.style.background = `rgba(0,0,0,${opacity})`;
 });
 
