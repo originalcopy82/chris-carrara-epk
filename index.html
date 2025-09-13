@@ -171,6 +171,7 @@ body {
 
     /* GALLERY */
     .gallery-slider {
+      margin-bottom: 100px;
       width: 100%;
       height: 400px;
       margin: 0 auto;
@@ -179,6 +180,12 @@ body {
       box-shadow: 0 4px 15px rgba(0,0,0,0.5);
       overflow: hidden;
     }
+
+    .gallery {
+  padding-bottom: 40px; /* space below slider */
+  height: 400px; /* match the slider height */
+  position: relative;
+}
 
     .slide {
       position: absolute;
@@ -355,16 +362,10 @@ body {
       <button id="next">&#10095;</button>
     </div>
   </div>
+   <div style="height:40px;"></div> <!-- spacer adds bottom space -->
 </section>
 
-<!-- SOCIALS -->
-<section class="socials content-block fade-in">
-  <div class="social-icons">
-    <a href="https://instagram.com/" target="_blank"><img src="assets/instagram.svg" alt="Instagram"></a>
-    <a href="https://soundcloud.com/" target="_blank"><img src="assets/soundcloud.svg" alt="SoundCloud"></a>
-    <a href="https://mixcloud.com/" target="_blank"><img src="assets/mixcloud.svg" alt="Mixcloud"></a>
-  </div>
-</section>
+
 
 <!-- SCRIPTS -->
 <script>
