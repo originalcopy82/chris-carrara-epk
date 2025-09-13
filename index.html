@@ -240,6 +240,27 @@ body {
       transform: scale(1.1);
     }
 
+   .instagram-wrapper {
+  max-width: 400px;       /* fix width */
+  width: 100%;
+  margin: 0 auto;         /* center horizontally */
+  padding: 0;             /* remove extra padding */
+}
+
+.instagram-wrapper blockquote {
+  margin: 0 !important;   /* remove Instagram default margin */
+  padding: 0 !important;  /* remove Instagram default padding */
+}
+
+.instagram-wrapper iframe {
+  width: 100% !important; /* ensure it fits container */
+}
+
+
+.instagram.content-block {
+  padding: 0;             /* remove bottom padding from section */
+}
+
     /* SOCIALS */
     .social-icons {
       display: flex;
@@ -348,6 +369,18 @@ body {
       src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2FChris_Carrara%2F" 
       allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;">
     </iframe>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="instagram content-block zoom-in">
+  <div class="instagram-wrapper">
+    <blockquote class="instagram-media" 
+        data-instgrm-captioned 
+        data-instgrm-permalink="https://www.instagram.com/p/DEiEAVvTK2N/?utm_source=ig_embed&utm_campaign=loading" 
+        data-instgrm-version="14">
+    </blockquote>
+    <script async src="//www.instagram.com/embed.js"></script>
   </div>
 </section>
 
