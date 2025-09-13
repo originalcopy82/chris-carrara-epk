@@ -38,12 +38,14 @@
     }
 
     .hero-container {
+      position: relative;
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: flex-end;
       padding-bottom: 80px;
       overflow: hidden;
+      z-index: 1;
     }
 
     .hero h1.logo {
@@ -55,9 +57,34 @@
       text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
       line-height: 0.9;
       max-width: 95%;
-      white-space: nowrap;       
-      overflow-wrap: normal;
-      hyphens: none;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    /* Scroll overlay */
+.scroll-overlay {
+  position: fixed; /* stay fixed with page */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0); /* start transparent */
+  pointer-events: none;
+  z-index: 0; /* sit under content, over background */
+}
+
+body {
+      position: relative;
+      z-index: -2;
+    }
+
+    .hero-container,
+    .about,
+    .music,
+    .gallery,
+    .socials {
+      position: relative;
+      z-index: 1;
     }
 
     /* Mobile adjustments */
@@ -92,6 +119,7 @@
         font-size: clamp(1.5rem, 4.5vw, 2.5rem);
       }
     }
+    
 
     section.content-block { padding: 0; }
 
@@ -100,6 +128,7 @@
       width: 100%;
       margin: 40px auto;
       box-sizing: border-box;
+      padding: 0;
     }
 
     /* About box */
@@ -110,6 +139,11 @@
       border-radius: 10px;
       text-align: center;
     }
+
+    /* remove padding from content-block for about */
+.about.content-block {
+  padding: 20px; /* padding inside black box */
+}
 
     /* AUDIO PLAYERS */
     .player-wrapper {
@@ -263,16 +297,18 @@
 
 <!-- HERO -->
 <section class="hero">
+  <div class="scroll-overlay"></div>
   <div class="hero-container">
     <h1 class="logo">CHRIS CARRARA</h1>
   </div>
 </section>
 
+
 <!-- ABOUT -->
 <section class="about content-block fade-in">
   <p>
     Glasgow-born DJ Chris Carrara has 20 years of global clubbing experience. From house and techno to hip-hop and tribal beats, his sets light up dance floors everywhere.
-    Now in The Gambia, he's bringing epic vibes to clubs across West Africa.
+    Now in The Gambia, he's bringing epic vibes to clubs in The Smiling Coast of Africa.
   </p>
 </section>
 
@@ -352,7 +388,19 @@ const observer = new IntersectionObserver((entries, obs)=>{
   });
 }, observerOptions);
 scrollElems.forEach(el=>observer.observe(el));
+
+
+window.addEventListener('scroll', () => {
+  const overlay = document.querySelector('.scroll-overlay');
+  const scrollTop = window.scrollY;
+  const maxScroll = window.innerHeight; // max scroll before fully dark
+  let opacity = Math.min(scrollTop / maxScroll, 0.7); // max opacity 0.7
+  overlay.style.background = `rgba(0,0,0,${opacity})`;
+});
+
 </script>
+
+
 
 </body>
 </html>
